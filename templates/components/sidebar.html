@@ -1,0 +1,24 @@
+<nav class="sidebar sidebar-offcanvas" id="sidebar">
+    <ul class="nav">
+      <li class="nav-item">
+        <a class="nav-link" href="{% url 'homepage' %}">
+          <i class="icon-grid menu-icon"></i>
+          <span class="menu-title">Employees</span>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="{% url 'blog-list' %}" >
+          <i class="icon-layout menu-icon"></i>
+          <span class="menu-title py-1 pr-1">Projects</span>
+          <!-- <i class="menu-arrow"></i> -->
+        </a>
+        <!-- <div class="collapse" id="ui-basic">
+          <ul class="nav flex-column sub-menu">
+            <li class="nav-item"> <a class="nav-link" href="/api/swagger/" target="_blank">Swagger</a></li>
+            <li class="nav-item"> <a class="nav-link" href="/api/redoc/" target="_blank">ReDocs</a></li>
+          </ul>
+        </div> -->
+      </li>
+
+    </ul>
+  </nav>
