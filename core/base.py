@@ -59,6 +59,7 @@ INSTALLED_APPS = [
     # "django_extensions",
     # "django.contrib.humanize",
     "storages",
+    "django_quill",
 ]
 
 MIDDLEWARE = [
@@ -197,14 +198,14 @@ SIMPLE_JWT = {
     "SLIDING_TOKEN_LIFETIME_LATE_USER": timedelta(days=500),
     "USER_ID_FIELD": "uid",
 }
-APPEND_SLASH = False
+# APPEND_SLASH = False
 
 AUTH_USER_MODEL = "manager.User"
 
 
 UNFOLD = {
-    "SITE_TITLE": "SKTLive Admin Panel",
-    "SITE_HEADER": "SKTLive Admin",
+    "SITE_TITLE": "Portfolio Admin Panel",
+    "SITE_HEADER": "Anwur Sadat Admin",
     # "SITE_LOGO": {
     #     "light": lambda request: static("imgs/light_asansa_logo.svg"),  # light mode
     #     "dark": lambda request: static("imgs/dark_asansa_logo_1.svg"),  # dark mode
@@ -239,3 +240,4 @@ LOGIN_URL = "/admin/login/"
 # }
 # AWS_LOCATION = config("AWS_LOCATION")
 # ENV_STATE = config("ENV_STATE")
+APPEND_SLASH = True
