@@ -1,7 +1,7 @@
 # myapp/urls.py
 from django.urls import path
 
-from .views import auth, employee, project
+from .views import auth, blog, project
 
 urlpatterns = [
     path("auth/register", auth.SignUpView.as_view(), name="register"),
