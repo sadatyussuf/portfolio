@@ -7,28 +7,20 @@ from django.db import models
 from django.dispatch import receiver
 from django.utils import timezone
 from django.utils.text import slugify
+from django_quill.fields import QuillField
 
 from .custom_manager import UserManager
 
-# from django.contrib.gis.db.models import  MultiPolygonField,GeometryField
-
 
 class User(AbstractUser):
-    # uid = models.CharField(max_length=50, unique=True, null=True, blank=True)
-
     email = models.EmailField(unique=True, primary_key=True)
     username = models.CharField(max_length=150, unique=False, null=False, blank=False)
-
-    is_admin = models.BooleanField(default=False)
+    profile_pic = models.FileField()
+    resume = models.FileField()
 
     USERNAME_FIELD = "email"
     REQUIRED_FIELDS = ["username"]
     objects = UserManager()  # type: ignore
-
-    def save(self, *args, **kwargs):
-        if self.is_superuser:
-            self.is_admin = True
-        super(User, self).save(*args, **kwargs)
 
     class Meta:
         verbose_name = "User"
@@ -45,114 +37,102 @@ class CommonFields(models.Model):
 
     created_at = models.DateTimeField(db_index=True, default=timezone.now)
     updated_at = models.DateTimeField(auto_now=True)
-    created_by = models.ForeignKey(User, models.CASCADE, null=True, blank=True)
+    # created_by = models.ForeignKey(User, models.CASCADE, null=True, blank=True)
 
     class Meta:
         abstract = True
 
 
-# class Employee(models.Model):
-#     user = models.OneToOneField(User, on_delete=models.CASCADE)
-#     profile_pic = models.FileField(null=True, blank=True)
-#     role = models.CharField(max_length=150, null=True, blank=True)
+class Tag(CommonFields):
+    # blog = models.ForeignKey(Blog, on_delete=models.CASCADE)
+    name = models.CharField(max_length=155)
 
-#     phone_number = models.CharField(max_length=20, blank=True, null=True)
-#     address = models.CharField(max_length=255, blank=True, null=True)
-#     date_employed = models.DateField(blank=True, null=True)
-#     salary = models.DecimalField(max_digits=10, decimal_places=2, blank=True, null=True)
-#     status = models.CharField(
-#         max_length=50,
-#         default="current",
-#         choices=[
-#             ("probation", "Probation"),
-#             ("current", "Current"),
-#             ("former", "Former"),
-#         ],
-#     )
-
-#     created_at = models.DateTimeField(db_index=True, default=timezone.now)
-#     updated_at = models.DateTimeField(auto_now=True)
-
-#     def __str__(self):
-#         return f"{self.user.username} - {self.role}"
+    def __str__(self) -> str:
+        return self.name
 
 
 class Project(CommonFields):
-    title = models.CharField(max_length=255)
-    description = models.CharField(max_length=255)
-    content = models.TextField(blank=True)
+    CATEGORY_CHOICES = [("personal", "Personal"), ("professional", "Professional")]
 
-    customer = models.CharField(max_length=150, null=True, blank=True)
+    title = models.CharField(max_length=200)
+    slug = models.SlugField(unique=True, max_length=200)
+    # description = models.CharField(max_length=255)
+    description = QuillField()
 
     start_date = models.DateField(blank=True, null=True)
     end_date = models.DateField(blank=True, null=True)
 
-    location = models.CharField(max_length=255)
-    longitude = models.FloatField(blank=True, null=True)
-    latitude = models.FloatField(blank=True, null=True)
+    github_link = models.CharField(max_length=250, null=True, blank=True)
+    demo_link = models.CharField(max_length=250, null=True, blank=True)
 
-    total_cost = models.DecimalField(max_digits=15, decimal_places=2)
-    invoice_amount = models.DecimalField(max_digits=15, decimal_places=2)
-    status = models.CharField(
-        max_length=50, choices=[("published", "Published"), ("draft", "Draft")]
-    )
+    category = models.CharField(max_length=250, choices=CATEGORY_CHOICES)
+    tags = models.ManyToManyField(Tag, related_name="projects")
+
+    cover_image = models.FileField(null=True, blank=True)
+    thumbnail = models.FileField(null=True, blank=True)
+
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            self.slug = slugify(self.title)  # Automatically create a slug
+        super().save(*args, **kwargs)
 
     def __str__(self):
         return self.title
 
 
-class ProjectImage(CommonFields):
+class ToolUsed(CommonFields):
     project = models.ForeignKey(
-        Project, on_delete=models.CASCADE, related_name="project_images"
+        Project, on_delete=models.CASCADE, related_name="project_tools"
     )
-
-    title = models.CharField(max_length=255)
-    image = models.FileField()
-    is_cover_image = models.BooleanField(default=False)
-    is_thumbnail = models.BooleanField(default=False)
+    name = models.CharField(max_length=255)
 
     def __str__(self) -> str:
+        return self.name
+
+
+class Blog(CommonFields):
+    title = models.CharField(max_length=255)
+    slug = models.SlugField(unique=True, max_length=200)
+    # content = models.CharField(max_length=255)
+    content = QuillField()
+    tags = models.ManyToManyField(Tag, related_name="blog_posts")
+
+    # image = models.FileField()
+    cover_image = models.FileField()
+    thumbnail = models.FileField()
+
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            self.slug = slugify(self.title)
+        super().save(*args, **kwargs)
+
+    def __str__(self):
         return self.title
 
 
-class ProjectFile(CommonFields):
-    project = models.ForeignKey(
-        Project, on_delete=models.CASCADE, related_name="project_files"
-    )
+class Skill(CommonFields):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="skills")
 
-    title = models.CharField(max_length=255)
-    file = models.FileField()
+    LEVEL_CHOICES = [
+        ("beginner", "Beginner"),
+        ("intermediate", "Intermediate"),
+        ("expert", "Expert"),
+    ]
+    name = models.CharField(max_length=255)
+    level = models.CharField(max_length=255)
 
     def __str__(self) -> str:
-        return self.title
+        return self.name
 
 
-# class ProjectParticipant(CommonFields):
-#     ROLE_CHOICES = [("field_worker", "Field Worker"), ("manager", "Manager")]
+class Testimonial(CommonFields):
+    user = models.ForeignKey(
+        User, on_delete=models.CASCADE, related_name="testimonials"
+    )
+    name = models.CharField(max_length=255)
+    # content = models.CharField(max_length=255)
+    content = QuillField()
+    profile_pic = models.FileField()
 
-#     project = models.ForeignKey(
-#         Project, on_delete=models.CASCADE, related_name="project_participants"
-#     )
-#     employee = models.ForeignKey(
-#         User, on_delete=models.CASCADE, related_name="projects"
-#     )
-#     role = models.CharField(max_length=250, choices=ROLE_CHOICES)
-#     bonus = models.DecimalField(max_digits=10, decimal_places=2)
-
-#     class Meta:  # type: ignore
-#         unique_together = ("project", "employee", "role")
-
-#     def __str__(self):
-#         return f"{self.employee.username} - {self.role} in {self.project.title}"
-
-
-# class OperationalCost(CommonFields):
-#     project = models.ForeignKey(
-#         Project, on_delete=models.CASCADE, related_name="operational_costs"
-#     )
-#     description = models.CharField(max_length=255)
-#     amount = models.DecimalField(max_digits=10, decimal_places=2)
-#     date_incurred = models.DateField()
-
-#     def __str__(self):
-#         return f"{self.description} - {self.amount} for {self.project.title}"
+    def __str__(self) -> str:
+        return self.name
