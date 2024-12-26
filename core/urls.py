@@ -8,9 +8,9 @@ from rest_framework import permissions
 
 schema_view = get_schema_view(
     openapi.Info(
-        title="SktLive API",
+        title="Portofolio API",
         default_version="v1",
-        description="Adam Afrique API",
+        description="API Endpoints for Portofolio",
         terms_of_service="https://www.google.com/policies/terms/",
         contact=openapi.Contact(email="contact@snippets.local"),
         license=openapi.License(name="BSD License"),
@@ -21,9 +21,14 @@ schema_view = get_schema_view(
 
 
 urlpatterns = [
-    path("api/drf", include("rest_framework.urls")),
+    # Admin and framework-level routes
     path("admin/", admin.site.urls),
+    path("api/drf", include("rest_framework.urls")),
+    # Application routes (non-API)
     path("", include("apps.manager.urls")),
+    # Versioned API routes
+    path("api/v1/", include("apis.rest_api.urls")),
+    # API documentation routes
     path(
         "swagger<format>/", schema_view.without_ui(cache_timeout=0), name="schema-json"
     ),
@@ -35,7 +40,6 @@ urlpatterns = [
     path(
         "api/redoc/", schema_view.with_ui("redoc", cache_timeout=0), name="schema-redoc"
     ),
-    path("api/v1/", include("apis.rest_api.urls")),
 ]
 
 
