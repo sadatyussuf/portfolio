@@ -1,0 +1,84 @@
+nav{
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    padding: 1rem 2rem;
+    background-color: rgb(23, 29, 24);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+
+}
+
+.logo{
+    font-family: "Fira Sans Condensed", serif;
+    font-weight: 800;
+    font-style: normal;
+    font-size: 2.1rem;
+    font-variant: small-caps;
+    color: #fefe;
+
+}
+
+
+.nav-links,.social-links{
+    display: flex;
+    list-style: none;
+    justify-content: space-around;
+    align-items: center;
+}
+
+
+.nav-links{
+    width: 22rem;
+    padding:0.5rem;
+}
+
+.nav-links div a{
+    list-style: none;
+    text-decoration: none;
+    color: rgba(162, 159, 162, 0.933);
+    font-size: 1.2rem;
+    padding: 0.5rem;
+    
+}
+.hamburger{
+    display: none;
+    padding: 0.3rem;
+    /* width: 2rem; */
+
+}
+
+/* .social-links{
+    padding:0.5rem;
+    width: 10rem;
+} */
+
+
+
+
+
+
+/* Extra Large Devices (large desktops) */
+@media (min-width: 1280px) {
+    /* Styles for XL devices */
+}
+
+/* Large Devices (laptops/desktops) */
+@media (min-width: 1024px) and (max-width: 1279px) {
+    /* Styles for LG devices */
+}
+
+/* Medium Devices (tablets) */
+@media (min-width: 768px) and (max-width: 1023px) {
+    /* Styles for MD devices */
+}
+
+/* Small Devices (phones, landscape mode) */
+@media (min-width: 480px) and (max-width: 767px) {
+    /* Styles for SM devices */
+}
+
+
+/* Extra Small Devices (phones, portrait mode) */
+@media (max-width: 479px) {
+    /* Styles for XS devices */
+}
