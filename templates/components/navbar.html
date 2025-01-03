@@ -1,91 +1,23 @@
-{% load static %}
+<nav>
+  <div class="logo">Anwur Sadat.</div>
 
-<nav class="navbar col-lg-12 col-12 p-0 fixed-topg d-flex flex-row  h-100">
-    <div class="text-center navbar-brand-wrapper d-flex align-items-center justify-content-center">
-      <a class="" href="/"><img class="logo" src="{% static 'imgs/logo2.png' %}"  alt="logo" style="width: 7rem;"/></a>
-    </div>
-    <div class="navbar-menu-wrapper d-flex align-items-center justify-content-end">
-      <button class="navbar-toggler navbar-toggler align-self-center" type="button" data-toggle="minimize">
-        <span class="icon-menu"></span>
-      </button>
-      <ul class="navbar-nav mr-lg-2 ml-5">
-        <div class="calendar ">
-          <div class="d-flex flex-row items-center border border-mutedBlue  rounded-lg py-2 px-4 ">
-            <div>
-              <svg width="24" height="24" viewBox="0 0 0.938 0.938" fill="none" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" clip-rule="evenodd" d="M.281.063a.03.03 0 0 1 .031.031v.031h.313V.094a.031.031 0 0 1 .063 0v.031h.094a.094.094 0 0 1 .093.094v.563a.094.094 0 0 1-.094.094H.156A.094.094 0 0 1 .063.781V.218A.094.094 0 0 1 .156.125H.25V.094A.03.03 0 0 1 .281.063m.344.125v.031a.031.031 0 0 0 .063 0V.188h.094a.03.03 0 0 1 .031.031v.094H.125V.219A.03.03 0 0 1 .156.188H.25v.031a.031.031 0 0 0 .063 0V.188zm-.5.187v.406a.03.03 0 0 0 .031.031h.625A.03.03 0 0 0 .812.781V.375zm.313.094a.031.031 0 1 1 .063 0 .031.031 0 0 1-.063 0M.594.438a.031.031 0 1 0 0 .063.031.031 0 0 0 0-.063m.094.031a.031.031 0 1 1 .063 0 .031.031 0 0 1-.063 0m.031.094a.031.031 0 1 0 0 .063.031.031 0 0 0 0-.063M.563.594a.031.031 0 1 1 .063 0 .031.031 0 0 1-.063 0M.469.563a.031.031 0 1 0 0 .063.031.031 0 0 0 0-.063M.313.594a.031.031 0 1 1 .063 0 .031.031 0 0 1-.063 0M.219.563a.031.031 0 1 0 0 .063.031.031 0 0 0 0-.063M.188.719a.031.031 0 1 1 .063 0 .031.031 0 0 1-.063 0M.344.688a.031.031 0 1 0 0 .063.031.031 0 0 0 0-.063m.094.031a.031.031 0 1 1 .063 0 .031.031 0 0 1-.063 0M.594.688a.031.031 0 1 0 0 .063.031.031 0 0 0 0-.063" fill="#000"/></svg>
-            </div>
-            {% now "j F, Y" as current_date %}
-            <div class="ml-3 text-center d-flex align-items-center ">{{ current_date }}</div>
-          </div>
-        </div>
-      </ul>
-      <ul class="navbar-nav navbar-nav-right">
-        <li class="nav-item dropdown">
-          <a class="nav-link count-indicator dropdown-toggle" id="notificationDropdown" href="#" data-toggle="dropdown">
-            <i class="icon-bell mx-0"></i>
-            <span class="count"></span>
-          </a>
-          <div class="dropdown-menu dropdown-menu-right navbar-dropdown preview-list" aria-labelledby="notificationDropdown">
-            <p class="mb-0 font-weight-normal float-left dropdown-header">Notifications</p>
-            <!-- <a class="dropdown-item preview-item">
-              <div class="preview-thumbnail">
-                <div class="preview-icon bg-success">
-                  <i class="ti-info-alt mx-0"></i>
-                </div>
-              </div>
-              <div class="preview-item-content">
-                <h6 class="preview-subject font-weight-normal">Application Error</h6>
-                <p class="font-weight-light small-text mb-0 text-muted">
-                  Just now
-                </p>
-              </div>
-            </a>
-            <a class="dropdown-item preview-item">
-              <div class="preview-thumbnail">
-                <div class="preview-icon bg-warning">
-                  <i class="ti-settings mx-0"></i>
-                </div>
-              </div>
-              <div class="preview-item-content">
-                <h6 class="preview-subject font-weight-normal">Settings</h6>
-                <p class="font-weight-light small-text mb-0 text-muted">
-                  Private message
-                </p>
-              </div>
-            </a>
-            <a class="dropdown-item preview-item">
-              <div class="preview-thumbnail">
-                <div class="preview-icon bg-info">
-                  <i class="ti-user mx-0"></i>
-                </div>
-              </div>
-              <div class="preview-item-content">
-                <h6 class="preview-subject font-weight-normal">New user registration</h6>
-                <p class="font-weight-light small-text mb-0 text-muted">
-                  2 days ago
-                </p>
-              </div>
-            </a> -->
-          </div>
-        </li>
-        <li class="nav-item nav-profile dropdown">
-          <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" id="profileDropdown">
-            <img  src="{% static 'imgs/face24.jpg' %}" alt="profile"/>
-          </a>
-          <div class="dropdown-menu dropdown-menu-right navbar-dropdown" aria-labelledby="profileDropdown">
-            <a class="dropdown-item" href="/admin/">
-              <i class="ti-settings text-primary"></i>
-              Settings
-            </a>
-            <a class="dropdown-item" href="/admin/logout/">
-              <i class="ti-power-off text-danger"></i>
-              <span class="text-danger">Logout</span>
-            </a>
-          </div>
-        </li>
-      </ul>
-      <button class="navbar-toggler navbar-toggler-right d-lg-none align-self-center" type="button" data-toggle="offcanvas">
-        <span class="icon-menu"></span>
-      </button>
-    </div>
-  </nav>
+  <!-- <div class="social-links">
+    <div><a href="https://www.youtube.com/@practicalgis"><svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" viewBox="0 0 45 45" xml:space="preserve"><path fill="#f61c0d" d="M45 39.579H0V5.421h45zm-28.977-7.1 15.736-9.883-15.736-9.883z"/></svg></a></div>
+
+    <div><a href="https://www.linkedin.com/in/anwur-sadat-yussuf-issah-aa48b11b2/"><svg width="20" height="20" viewBox="0 0 0.625 0.625" xmlns="http://www.w3.org/2000/svg"><path fill="#0077b7" d="M.532.532H.44V.387C.44.353.44.308.392.308.343.308.336.346.336.385v.147H.243V.234h.089v.041h.001A.1.1 0 0 1 .421.227c.094 0 .111.061.111.142zM.139.194a.053.053 0 0 1 0-.107.053.053 0 0 1 0 .107m.046.339H.092V.234h.093zM.579 0H.046A.045.045 0 0 0 0 .045V.58c0 .025.021.045.046.045h.532C.603.625.624.605.624.58V.045A.046.046 0 0 0 .578 0z"/></svg></a></div>
+
+    <div><a href="https://github.com/sadatyussuf"><svg width="25" height="25" viewBox="-0.063 -0.063 0.75 0.75" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMinYMin" class="jam jam-github"><path fill="#27a2db" d="M.59.034Q.556 0 .507 0h-.39Q.069 0 .034.034 0 .069 0 .117v.39Q0 .555.034.59q.034.034.083.034h.091L.221.623.23.618Q.234.613.234.604v-.07L.225.536Q.216.538.202.537L.174.534A.1.1 0 0 1 .147.522.05.05 0 0 1 .129.497L.125.488.112.467Q.103.456.094.452L.091.45.086.445.082.439Q.081.436.084.434T.096.432l.008.001q.008.002.02.01a.1.1 0 0 1 .02.021q.009.017.023.025.013.009.027.009T.217.496L.235.49Q.239.463.255.448L.213.441A.2.2 0 0 1 .175.425.1.1 0 0 1 .142.398Q.129.382.121.355T.113.294q0-.049.032-.084Q.13.173.148.127.16.123.183.132t.034.016l.017.011A.3.3 0 0 1 .312.148q.04 0 .078.011l.015-.01.037-.018Q.464.123.475.127.493.173.478.21.51.245.51.294q0 .035-.008.061Q.494.382.48.398a.1.1 0 0 1-.033.027Q.427.436.409.441L.367.448q.021.018.021.058v.097q0 .007.002.011L.396.62l.008.002h.101q.048 0 .083-.034T.622.505V.117q0-.048-.034-.083z"/></svg></a></div>
+  </div> -->
+
+  <div class="nav-links">
+    <div><a href="">About</a></div>
+    <div><a href="">Skills</a></div>
+    <div><a href="">Projects</a></div>
+    <div><a href="">Blog</a></div>
+  </div>
+
+  <div class="hamburger">
+    <svg width="40" height="40" viewBox="-0.078 0 0.594 0.594" xmlns="http://www.w3.org/2000/svg" class="cf-icon-svg"><path fill="#fff" d="M.025.151A.03.03 0 0 1 .057.119h.324a.032.032 0 1 1 0 .065H.057A.03.03 0 0 1 .025.151m.388.136a.03.03 0 0 1-.032.032H.057a.032.032 0 0 1 0-.065h.324a.03.03 0 0 1 .032.032zm0 .136a.03.03 0 0 1-.032.032H.057a.032.032 0 1 1 0-.065h.324a.03.03 0 0 1 .032.032z"/></svg>
+  </div>
+
+</nav>
